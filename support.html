@@ -5,6 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Support — SX/Cal</title>
 <meta name="description" content="Get help with SX/Cal: setting up your OpenAI API key, billing questions, deleting your data, and how to reach us.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "SX/Cal says it needs an OpenAI API key — what's that?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SX/Cal uses your own OpenAI account to understand what you type or say, so there's no shared cost baked into the app and your requests go straight from your device to OpenAI, nothing in between. Get a key at platform.openai.com, then add it in SX/Cal's Settings. OpenAI's API pricing is pay-as-you-go and separate from SX/Cal itself; typical day-to-day use is inexpensive, but it's your account and your usage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is my API key stored?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In this device's Keychain, encrypted by iOS — not in iCloud Keychain, so it doesn't sync to your other devices, and not in SX/Cal's own storage alongside your events and notes. SX/Cal doesn't transmit it anywhere except in the Authorization header of a request you send to OpenAI, and there's no SX/Cal server for it to pass through even if it wanted to. See the Privacy Policy for the full picture."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does SX/Cal mark up my OpenAI usage, or take a cut?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. SX/Cal has no OpenAI key of its own, so there's nothing for it to mark up — every request goes straight from your device to OpenAI using your key, and OpenAI bills you directly for exactly what you use. SX/Cal never sees that billing relationship, let alone adds to it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is bringing my own API key cheaper than an AI calendar app with a flat subscription?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually, for everyday use. OpenAI's API is pay-as-you-go — you're charged for what you actually send, not a flat monthly fee regardless of use — so light or moderate use tends to cost less than a subscription that bundles AI costs in for everyone. If you'd use an AI calendar constantly, all day, it's worth comparing your expected OpenAI usage against a flat-rate alternative directly, since heavy continuous use is where pay-as-you-go can end up costing more."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Roughly how much would creating 10 events cost in OpenAI usage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "About 3–5 cents total, based on real measurements against the app's actual prompts. Each event you create updates what SX/Cal shows the model about your calendar on the next request, so OpenAI can't reuse its cache between different events the way it can within one back-and-forth about the same event — asking a clarifying question or two costs a little more, stating everything up front costs a little less, but either way it's fractions of a cent per event. See OpenAI's current pricing for this model at developers.openai.com — SX/Cal doesn't mark it up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My OpenAI key stopped working / \"out of credit.\"",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check your usage and billing at platform.openai.com — this is between you and OpenAI directly; SX/Cal doesn't see or manage your billing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does SX/Cal see my Notes app or send my calendar somewhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. SX/Cal reads your real Calendar on-device only, to check conflicts and free time — it never modifies it without your explicit confirmation, and never uploads it. Moments (the notes feature) matches your notes to your day entirely on-device. See the Privacy Policy for the full picture of what does and doesn't leave your device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I delete my data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Settings → \"Delete SX/Cal's Data & Start Fresh\" removes every event, note, and reminder SX/Cal has stored. This can't be undone, and it never touches your real Calendar app's own events."
+      }
+    }
+  ]
+}
+</script>
 <link rel="icon" type="image/png" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
