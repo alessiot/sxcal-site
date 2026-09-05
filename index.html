@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SX/Cal — Make space for what matters</title>
+<meta name="description" content="SX/Cal is a conversational calendar for iOS. Plan naturally, see your day at a glance, and bring your notes back into the moment they're relevant — with your own OpenAI key, nothing sold or tracked.">
+<link rel="icon" type="image/png" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo: #4E63C9;
+    --purple: #6754D9;
+    --pink: #E94EAF;
+    --orange: #FFAF2D;
+    --accent: var(--purple);
+
+    --text-primary: #25235A;
+    --text-secondary: #5E5B7A;
+    --text-tertiary: #8B889F;
+
+    --bg: #FAF9FF;
+    --card: #FFFFFF;
+    --subtle: #F3F1FA;
+    --border: #E8E6F2;
+
+    --font-body: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-cursive: 'Caveat', cursive;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: var(--accent); }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(250, 249, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  .nav-brand img { width: 32px; height: 32px; border-radius: 8px; }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 84px 0 56px;
+    text-align: center;
+  }
+  .hero img.logo {
+    width: 104px;
+    height: 104px;
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(103, 84, 217, 0.25);
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: var(--font-cursive);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6vw, 4rem);
+    margin: 0 0 6px;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+  .hero .tagline {
+    font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 22px;
+  }
+  .hero .sub {
+    max-width: 560px;
+    margin: 0 auto 34px;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .store-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--text-primary);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.55;
+    cursor: default;
+  }
+  .store-badge svg { width: 22px; height: 22px; }
+  .store-badge small { display: block; font-weight: 500; font-size: 0.7rem; opacity: 0.8; }
+
+  /* ---------- Story ---------- */
+  .story {
+    padding: 40px 0 20px;
+    text-align: center;
+  }
+  .story p {
+    max-width: 620px;
+    margin: 0 auto 14px;
+    color: var(--text-secondary);
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+  .story p.punch {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  .story .divider {
+    font-family: var(--font-cursive);
+    font-size: 2.2rem;
+    color: var(--accent);
+    margin: 22px 0;
+  }
+
+  /* ---------- Screenshot showcase ---------- */
+  .showcase {
+    padding: 56px 0 8px;
+    overflow: hidden;
+  }
+  .showcase-scroll {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 8px 24px 28px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .showcase-scroll::-webkit-scrollbar { height: 8px; }
+  .showcase-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+  .shot {
+    flex: 0 0 auto;
+    width: 210px;
+    scroll-snap-align: center;
+    text-align: center;
+  }
+  .shot img {
+    width: 100%;
+    border-radius: 22px;
+    border: 6px solid var(--card);
+    box-shadow: 0 16px 34px rgba(37, 35, 90, 0.14);
+  }
+  .shot figcaption {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  /* ---------- Features ---------- */
+  .features {
+    padding: 72px 0;
+  }
+  .section-head {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+  .section-head h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.2rem);
+    margin: 0 0 8px;
+    color: var(--text-primary);
+  }
+  .section-head p {
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+  }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+  }
+  .feature-card .mark {
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .feature-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.08rem;
+    color: var(--text-primary);
+  }
+  .feature-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .feature-card:nth-child(1) .mark { color: var(--purple); }
+  .feature-card:nth-child(2) .mark { color: var(--orange); }
+  .feature-card:nth-child(3) .mark { color: var(--indigo); }
+  .feature-card:nth-child(4) .mark { color: var(--pink); }
+  .feature-card:nth-child(5) .mark { color: var(--purple); }
+
+  /* ---------- Trust ---------- */
+  .trust {
+    background: var(--subtle);
+    padding: 64px 0;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    text-align: center;
+  }
+  .trust-item h3 {
+    margin: 0 0 8px;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+  }
+  .trust-item p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  /* ---------- Final CTA ---------- */
+  .cta {
+    padding: 80px 0;
+    text-align: center;
+  }
+  .cta h2 {
+    font-family: var(--font-cursive);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    margin: 0 0 26px;
+    color: var(--text-primary);
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 0 48px;
+  }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: var(--text-tertiary);
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero { padding: 56px 0 40px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top">
+      <img src="assets/logo-512.png" alt="SX/Cal">
+      SX/Cal
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <img class="logo" src="assets/logo-512.png" alt="SX/Cal app icon">
+    <h1>SX/Cal</h1>
+    <p class="tagline">Make space for what matters</p>
+    <p class="sub">A calendar you talk to, and notes it actually remembers to bring back — right before the meeting, or right when you finally have the time.</p>
+    <div class="badge-row">
+      <span class="store-badge" title="Coming soon">
+        <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span>Coming soon on the<br><small>App Store</small></span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<section class="story">
+  <div class="wrap">
+    <p>Your thoughts live in notes. Your time lives in your calendar. But the two rarely meet.</p>
+    <p>You write down an idea for a project. A question you want to ask someone. Something you need to prepare for. Then life moves on — the meeting arrives, and you forget the note you wrote about it.</p>
+    <p class="divider">✦</p>
+    <p class="punch">SX/Cal brings your thoughts and your time together.</p>
+    <p>See what your day feels like at a glance. Plan naturally, just by asking. And when the right moment arrives, SX/Cal brings back the things you chose to remember.</p>
+  </div>
+</section>
+
+<section class="showcase" id="screenshots">
+  <div class="section-head wrap">
+    <h2>See it in your day</h2>
+    <p>Real screenshots, real conversations — nothing staged.</p>
+  </div>
+  <div class="showcase-scroll">
+    <figure class="shot">
+      <img src="assets/screenshots/01_ChatCreatesEvent.png" alt="Creating an event by chatting naturally with SX/Cal" loading="lazy">
+      <figcaption>Plan by talking</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/screenshots/02_DayNarrationAndReminders.png" alt="A written summary of the day plus reminders still on your mind" loading="lazy">
+      <figcaption>Your day, narrated</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/screenshots/06_PhotoAttached.png" alt="A photo of an event flyer attached in chat" loading="lazy">
+      <figcaption>Snap a flyer</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/screenshots/07_PhotoToEvent.png" alt="SX/Cal reading the details from a photo into a draft event" loading="lazy">
+      <figcaption>Reads the details</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/screenshots/05_Calendar.png" alt="The calendar view showing a day's events" loading="lazy">
+      <figcaption>A real calendar view</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/screenshots/08_CreateNote.png" alt="Writing a note inside SX/Cal" loading="lazy">
+      <figcaption>Notes that stay close</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="assets/screenshots/03_ReminderInitiatesChat.png" alt="Checking off a reminder routes into a real chat confirmation" loading="lazy">
+      <figcaption>Reminders that follow through</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What SX/Cal does</h2>
+      <p>Not another productivity system to maintain — just capture your thoughts, and live your life.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="mark">✦</span>
+        <h3>Plan naturally</h3>
+        <p>Create, move, and organize events simply by talking to SX/Cal — no forms, no menus to hunt through.</p>
+      </div>
+      <div class="feature-card">
+        <span class="mark">✦</span>
+        <h3>Capture events from a photo</h3>
+        <p>Snap a picture of an invite, flyer, or ticket — SX/Cal reads the details and drafts the event for you to confirm.</p>
+      </div>
+      <div class="feature-card">
+        <span class="mark">✦</span>
+        <h3>See your day differently</h3>
+        <p>Get an immediate sense of how your day is shaped — what's busy, what's ahead, and where you have room to breathe.</p>
+      </div>
+      <div class="feature-card">
+        <span class="mark">✦</span>
+        <h3>Bring your notes into the moment</h3>
+        <p>Choose the notes you want to use with SX/Cal. When they're relevant to your day, it helps bring them back at the right time.</p>
+      </div>
+      <div class="feature-card">
+        <span class="mark">✦</span>
+        <h3>Make space for what matters</h3>
+        <p>Find time for the things you've been meaning to do — without manually searching through your calendar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Your data stays yours</h2>
+      <p>SX/Cal uses your own OpenAI API key — your requests go straight from your device to OpenAI, nothing in between.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <h3>No server</h3>
+        <p>Your calendar, notes, and reminders are stored on your device. There isn't a SX/Cal server for them to live on.</p>
+      </div>
+      <div class="trust-item">
+        <h3>No tracking</h3>
+        <p>No analytics, no advertising, no third-party tracking of any kind — not a reduced version, not present at all.</p>
+      </div>
+      <div class="trust-item">
+        <h3>Nothing sold</h3>
+        <p>Your data is never sold or shared beyond what you send OpenAI to understand your own requests.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Make space for what matters. ✦</h2>
+    <div class="badge-row">
+      <span class="store-badge" title="Coming soon">
+        <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span>Coming soon on the<br><small>App Store</small></span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 SX/Cal</span>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="support.html">Support</a>
+      <a href="mailto:exo.ai@icloud.com">exo.ai@icloud.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

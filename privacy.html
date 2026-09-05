@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — SX/Cal</title>
+<meta name="description" content="SX/Cal Privacy Policy: what the app stores, what's sent to OpenAI with your own key, and what is never collected.">
+<link rel="icon" type="image/png" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="page.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img src="assets/logo-512.png" alt="SX/Cal">
+      SX/Cal
+    </a>
+    <div class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#screenshots">Screenshots</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </div>
+  </div>
+</nav>
+
+<header class="doc-header wrap">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: September 2, 2026</p>
+</header>
+
+<main class="doc wrap">
+
+<p>SX/Cal is a calendar assistant app. This policy explains, in plain
+terms, what SX/Cal does and doesn't do with your data. If a sentence
+here doesn't match what the app actually does, that's a bug in this
+document, not license to assume otherwise — treat the app itself as the
+source of truth and <a href="mailto:exo.ai@icloud.com">tell us</a>.</p>
+
+<h2>The short version</h2>
+<ul>
+  <li>Your calendar, notes, and reminders are stored on your device, not
+    on any server SX/Cal operates — because there isn't one.</li>
+  <li>The text you send SX/Cal (chat messages, reminders, photos you
+    attach) is sent to OpenAI, using <strong>your own OpenAI API
+    key</strong>, to be understood. SX/Cal has no OpenAI key of its own
+    and nothing passes through an SX/Cal server in between.</li>
+  <li>Nothing is sold. There is no advertising, no analytics, and no
+    tracking of any kind, by SX/Cal or by any third party embedded in
+    the app.</li>
+</ul>
+
+<h2>What SX/Cal stores, and where</h2>
+<table>
+  <tr><th>Data</th><th>Where it lives</th><th>Leaves this device?</th></tr>
+  <tr>
+    <td>Events, notes, and reminders you create in SX/Cal</td>
+    <td>This device (local database)</td>
+    <td>Only if you turn on iCloud Sync (below)</td>
+  </tr>
+  <tr>
+    <td>Your OpenAI API key</td>
+    <td>This device's Keychain (encrypted by iOS)</td>
+    <td>Only in the <code>Authorization</code> header of requests you send to OpenAI</td>
+  </tr>
+  <tr>
+    <td>Your real Calendar's events (read-only)</td>
+    <td>Apple's own Calendar database, unchanged</td>
+    <td>No — read locally to check conflicts and free time; never uploaded, never modified by SX/Cal</td>
+  </tr>
+</table>
+
+<p><strong>iCloud Sync</strong> is off by default. If you turn it on
+(Settings), your events, notes, and reminders sync via Apple's own
+iCloud/CloudKit under your own Apple ID — governed by
+<a href="https://www.apple.com/legal/privacy/">Apple's privacy
+policy</a>, not this one. SX/Cal has no separate server-side copy of
+this data either way.</p>
+
+<h2>What's sent to OpenAI, and why</h2>
+<p>SX/Cal is a natural-language app: understanding "move my dentist
+appointment to Friday" requires sending that text to a language model.
+SX/Cal uses <a href="https://openai.com/">OpenAI's API</a> for this,
+with <strong>the API key you provide</strong> in Settings — never a
+key SX/Cal supplies.</p>
+
+<p>What's sent, only when you actually make a request:</p>
+<ul>
+  <li>The text of your chat message, reminder, or "remember this" request.</li>
+  <li>Your existing event titles/times (not full note contents) as
+    context, so the model can resolve something like "move my 3pm to
+    4."</li>
+  <li>If you attach a photo (photo-to-event), the photo itself, sent to
+    OpenAI's vision model to read schedule-relevant details from it.</li>
+</ul>
+
+<p>This goes directly from your device to OpenAI's API — never to a
+server SX/Cal operates, because none exists. Your use of OpenAI's API
+is subject to
+<a href="https://openai.com/policies/">OpenAI's own privacy policy and
+API data usage policy</a>, which (as of this writing) states that API
+data isn't used to train OpenAI's models by default. Review OpenAI's
+current policy directly for specifics, since it can change
+independently of this document.</p>
+
+<p><strong>Moments</strong> (the on-device feature connecting your
+notes to today's calendar) does not send anything to OpenAI — its
+matching runs entirely on-device using Apple's own on-device language
+model (<code>NLContextualEmbedding</code>), built into iOS.</p>
+
+<h2>Other services SX/Cal uses</h2>
+<ul>
+  <li><strong>Weather</strong> (shown in the chat greeting): your
+    approximate location (from iOS's own location permission, "while
+    using the app") is sent to
+    <a href="https://open-meteo.com/">Open-Meteo</a>, a free weather
+    API, to fetch the local forecast. Open-Meteo doesn't require an
+    account or API key, and SX/Cal sends only coordinates, nothing
+    identifying you personally.</li>
+  <li><strong>Apple Calendar</strong> (EventKit): read-only, with your
+    explicit permission, to check for conflicts and free time against
+    events from your real Calendar app. SX/Cal never writes to,
+    modifies, or deletes anything in your real Calendar.</li>
+</ul>
+
+<p>No analytics SDK, crash reporter, or advertising network is included
+in SX/Cal at all — not a reduced-tracking version, not present in the
+app whatsoever.</p>
+
+<h2>Your controls</h2>
+<ul>
+  <li><strong>Remove your API key</strong> at any time in Settings —
+    SX/Cal stops working until you add one back (it's required to
+    function), but nothing about removing it deletes your calendar
+    data.</li>
+  <li><strong>Delete SX/Cal's Data &amp; Start Fresh</strong> (Settings)
+    permanently deletes every event, note, and reminder SX/Cal has
+    stored, on this device and in iCloud if sync was on. This cannot be
+    undone. It never touches your real Calendar app's own events.</li>
+  <li><strong>Deleting the app</strong> removes its local data (events,
+    notes, reminders, your saved key) the same way deleting any iOS app
+    does, except iCloud data if sync was ever turned on — use "Delete
+    SX/Cal's Data" first if you want a clean removal from iCloud too.</li>
+</ul>
+
+<h2>Children's privacy</h2>
+<p>SX/Cal is not directed at children under 13 and does not knowingly
+collect data from them.</p>
+
+<h2>Changes to this policy</h2>
+<p>If what SX/Cal sends or stores changes in a future update, this page
+will be updated to match, with the "Last updated" date above revised
+accordingly.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy or your data:
+<a href="mailto:exo.ai@icloud.com">exo.ai@icloud.com</a></p>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 SX/Cal</span>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="support.html">Support</a>
+      <a href="mailto:exo.ai@icloud.com">exo.ai@icloud.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
