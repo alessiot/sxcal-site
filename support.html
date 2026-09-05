@@ -60,6 +60,31 @@ then add it in SX/Cal's Settings. OpenAI's API pricing is pay-as-you-go
 and separate from SX/Cal itself; typical day-to-day use is inexpensive,
 but it's your account and your usage.</p>
 
+<p><strong>Where is my API key stored?</strong><br>
+In this device's Keychain, encrypted by iOS — not in iCloud Keychain, so
+it doesn't sync to your other devices, and not in SX/Cal's own storage
+alongside your events and notes. SX/Cal doesn't transmit it anywhere
+except in the <code>Authorization</code> header of a request you send
+to OpenAI, and there's no SX/Cal server for it to pass through even if
+it wanted to. See the <a href="privacy.html">Privacy Policy</a> for the
+full picture.</p>
+
+<p><strong>Does SX/Cal mark up my OpenAI usage, or take a cut?</strong><br>
+No. SX/Cal has no OpenAI key of its own, so there's nothing for it to
+mark up — every request goes straight from your device to OpenAI using
+your key, and OpenAI bills you directly for exactly what you use.
+SX/Cal never sees that billing relationship, let alone adds to it.</p>
+
+<p><strong>Is bringing my own API key cheaper than an AI calendar app
+with a flat subscription?</strong><br>
+Usually, for everyday use. OpenAI's API is pay-as-you-go — you're
+charged for what you actually send, not a flat monthly fee regardless
+of use — so light or moderate use tends to cost less than a
+subscription that bundles AI costs in for everyone. If you'd use an AI
+calendar constantly, all day, it's worth comparing your expected OpenAI
+usage against a flat-rate alternative directly, since heavy continuous
+use is where pay-as-you-go can end up costing more.</p>
+
 <p><strong>My OpenAI key stopped working / "out of credit."</strong><br>
 Check your usage and billing at
 <a href="https://platform.openai.com/account/billing">platform.openai.com</a>
