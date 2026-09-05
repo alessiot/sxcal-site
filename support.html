@@ -85,6 +85,18 @@ calendar constantly, all day, it's worth comparing your expected OpenAI
 usage against a flat-rate alternative directly, since heavy continuous
 use is where pay-as-you-go can end up costing more.</p>
 
+<p><strong>Roughly how much would creating 10 events cost in OpenAI
+usage?</strong><br>
+About 3–5 cents total, based on real measurements against the app's
+actual prompts. Each event you create updates what SX/Cal shows the
+model about your calendar on the next request, so OpenAI can't reuse
+its cache between different events the way it can within one
+back-and-forth about the <em>same</em> event — asking a clarifying
+question or two costs a little more, stating everything up front costs
+a little less, but either way it's fractions of a cent per event. See
+<a href="https://developers.openai.com/api/docs/models/gpt-5.6-luna">OpenAI's
+current pricing for this model</a> — SX/Cal doesn't mark it up.</p>
+
 <p><strong>My OpenAI key stopped working / "out of credit."</strong><br>
 Check your usage and billing at
 <a href="https://platform.openai.com/account/billing">platform.openai.com</a>
